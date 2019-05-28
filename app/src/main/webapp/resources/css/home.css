@@ -1,0 +1,51 @@
+body{
+	/* background-image: url('bg.jpg'); */
+}
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+#title{
+	padding-left: 10px;
+	width: 100%;
+	background: #e0ffe1;
+	height: 80px;
+	text-align: center;
+	
+}
+#nameTitle {
+	color: #7c92f4;
+	/* font-family: "Arial Black", Gadget, sans-serif; */
+}
+#header{
+	z-index: 1;
+	background:white;
+	position: fixed;
+	top: 0;
+	width:100%;	
+	/* height: 50px; */
+}
+.dropdown-toggle::before{
+	 display: none;
+}
+/* END HEADER */
+
+/* BODY*/
+#content-wrap {
+	padding-top: 150px;
+    padding-bottom: 120px;   
+}
+/* END BODY */
+
+/* FOOTER*/
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    color: white;
+    background-color: #272828;           
+}
+
+

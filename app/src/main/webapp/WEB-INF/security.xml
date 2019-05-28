@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                    http://www.springframework.org/schema/security
+                    http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+ 	
+    <!-- spring security configuration -->
+    <http auto-config="true" use-expressions="true">    
+        <access-denied-handler error-page="/403" />
+        
+        <intercept-url pattern="/userManage" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/classManage" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/courseManage" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/registerManage" access="hasRole('ROLE_ADMIN')" />
+ 		<intercept-url pattern="/userInfo" access="hasRole('ROLE_USER')" />
+ 		<intercept-url pattern="/userRegister" access="hasRole('ROLE_USER')" />
+ 		<intercept-url pattern="classDoRegister**" access="hasRole('ROLE_USER')" />
+ 		<intercept-url pattern="classRemoveRegister**" access="hasRole('ROLE_USER')" />
+ 		<intercept-url pattern="/php" access="isAuthenticated()" />
+ 		
+        <!-- user-defined login form redirection -->
+        <form-login login-page="/login" 
+        	
+        	default-target-url="/home"
+        	username-parameter="username"
+			password-parameter="password"	
+            authentication-failure-url="/login?error" />
+ 
+         <!-- logout url -->
+        <logout logout-url="/logout" 
+         delete-cookies="JSESSIONID"/>
+ 
+        <!-- csrf disabled -->
+        <csrf disabled="true" />
+    </http>
+ 
+    <!-- spring authentication configuration via database -->
+    <authentication-manager>
+        <authentication-provider>
+           <jdbc-user-service data-source-ref="myDataSource"
+                users-by-username-query="select username, password, enabled from user where username = ?"
+                authorities-by-username-query="select username, role from user where username = ?" />
+        </authentication-provider>
+    </authentication-manager>
+ 
+
+ 	<beans:bean id="myDataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <beans:property name="url" value="jdbc:mysql://localhost:3308/project" />
+        <beans:property name="username" value="root" />
+        <beans:property name="password" value="020166195" />
+    </beans:bean>
+</beans:beans>
